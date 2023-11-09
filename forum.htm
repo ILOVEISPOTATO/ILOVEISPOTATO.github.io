@@ -6,38 +6,43 @@
 <body>
     <h1>Forum Simple</h1>
     <form id="postForm">
-        <label for="username">Nom d'utilisateur:</label><br>
-        <input type="text" id="username" name="username"><br>
+        <label for="title">Titre du sujet:</label><br>
+        <input type="text" id="title" name="title"><br>
         <label for="message">Message:</label><br>
         <textarea id="message" name="message"></textarea><br>
         <input type="submit" value="Poster">
     </form>
-    <h2>Messages</h2>
-    <div id="posts"></div>
+    <h2>Sujets</h2>
+    <div id="topics"></div>
 
     <script>
         document.getElementById('postForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            var username = document.getElementById('username').value;
+            var title = document.getElementById('title').value;
             var message = document.getElementById('message').value;
-            var posts = JSON.parse(localStorage.getItem('posts')) || [];
-            posts.push({username: username, message: message});
-            localStorage.setItem('posts', JSON.stringify(posts));
-            displayPosts();
+            var topics = JSON.parse(localStorage.getItem('topics')) || [];
+            topics.push({title: title, message: message});
+            localStorage.setItem('topics', JSON.stringify(topics));
+            displayTopics();
         });
 
-        function displayPosts() {
-            var posts = JSON.parse(localStorage.getItem('posts')) || [];
-            var postsDiv = document.getElementById('posts');
-            postsDiv.innerHTML = '';
-            for(var i = 0; i < posts.length; i++) {
-                var post = document.createElement('div');
-                post.textContent = posts[i].username + ': ' + posts[i].message;
-                postsDiv.appendChild(post);
+        function displayTopics() {
+            var topics = JSON.parse(localStorage.getItem('topics')) || [];
+            var topicsDiv = document.getElementById('topics');
+            topicsDiv.innerHTML = '';
+            for(var i = 0; i < topics.length; i++) {
+                var topicLink = document.createElement('a');
+                topicLink.textContent = topics[i].title;
+                topicLink.href = '#';
+                topicLink.onclick = function() {
+                    alert('Message: ' + topics[i].message);
+                };
+                topicsDiv.appendChild(topicLink);
+                topicsDiv.appendChild(document.createElement('br'));
             }
         }
 
-        displayPosts();
+        displayTopics();
     </script>
 </body>
 </html>
