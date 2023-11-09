@@ -1,54 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chat général</title>
-    <style>
-        #posts {
-            margin-top: 20px;
-        }
-        .post {
-            border: 1px solid black;
-            margin-bottom: 10px;
-            padding: 10px;
-        }
-    </style>
+    <title>Forum Simple</title>
 </head>
 <body>
-    <h1>Chat Générale</h1>
+    <h1>Forum Simple</h1>
     <form id="postForm">
-        <label for="title">Pseudo (facultatif):</label><br>
-        <input type="text" id="title" name="title"><br>
-        <label for="content">Contenu:</label><br>
-        <textarea id="content" name="content"></textarea><br>
+        <label for="username">Nom d'utilisateur:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message"></textarea><br>
         <input type="submit" value="Poster">
     </form>
+    <h2>Messages</h2>
     <div id="posts"></div>
 
     <script>
-        // Charger les sujets du stockage local
-        var posts = JSON.parse(localStorage.getItem('posts')) || [];
-        posts.forEach(function(post) {
-            addPostToDOM(post.title, post.content);
-        });
-
         document.getElementById('postForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            var title = document.getElementById('title').value;
-            var content = document.getElementById('content').value;
-            posts.push({title: title, content: content});
-            // Sauvegarder les sujets dans le stockage local
+            var username = document.getElementById('username').value;
+            var message = document.getElementById('message').value;
+            var posts = JSON.parse(localStorage.getItem('posts')) || [];
+            posts.push({username: username, message: message});
             localStorage.setItem('posts', JSON.stringify(posts));
-            addPostToDOM(title, content);
-            document.getElementById('title').value = '';
-            document.getElementById('content').value = '';
+            displayPosts();
         });
 
-        function addPostToDOM(title, content) {
-            var post = document.createElement('div');
-            post.className = 'post';
-            post.innerHTML = '<h2>' + title + '</h2><p>' + content + '</p>';
-            document.getElementById('posts').appendChild(post);
+        function displayPosts() {
+            var posts = JSON.parse(localStorage.getItem('posts')) || [];
+            var postsDiv = document.getElementById('posts');
+            postsDiv.innerHTML = '';
+            for(var i = 0; i < posts.length; i++) {
+                var post = document.createElement('div');
+                post.textContent = posts[i].username + ': ' + posts[i].message;
+                postsDiv.appendChild(post);
+            }
         }
+
+        displayPosts();
     </script>
 </body>
 </html>
