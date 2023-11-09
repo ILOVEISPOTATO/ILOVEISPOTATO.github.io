@@ -7,9 +7,9 @@
     <h1>Forum Simple</h1>
     <form id="postForm">
         <label for="title">Titre du sujet:</label><br>
-        <input type="text" id="title" name="title"><br>
+        <input type="text" id="title" name="title" required><br>
         <label for="message">Message:</label><br>
-        <textarea id="message" name="message"></textarea><br>
+        <textarea id="message" name="message" required></textarea><br>
         <input type="submit" value="Poster">
     </form>
     <h2>Sujets</h2>
@@ -33,10 +33,7 @@
             for(var i = 0; i < topics.length; i++) {
                 var topicLink = document.createElement('a');
                 topicLink.textContent = topics[i].title;
-                topicLink.href = '#';
-                topicLink.onclick = function() {
-                    alert('Message: ' + topics[i].message);
-                };
+                topicLink.href = 'topic.html?title=' + encodeURIComponent(topics[i].title);
                 topicsDiv.appendChild(topicLink);
                 topicsDiv.appendChild(document.createElement('br'));
             }
