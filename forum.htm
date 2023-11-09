@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mon Forum</title>
+</head>
+<body>
+    <h1>Bienvenue sur Mon Forum</h1>
+
+    <!-- Formulaire pour poster un nouveau sujet -->
+    <form action="/post_sujet" method="POST">
+        <label for="titre">Titre du sujet:</label><br>
+        <input type="text" id="titre" name="titre"><br>
+        <label for="message">Votre message:</label><br>
+        <textarea id="message" name="message"></textarea><br>
+        <input type="submit" value="Poster le sujet">
+    </form>
+
+    <!-- Liste des sujets -->
+    <div id="sujets">
+        <!-- Les sujets seront ajoutés ici -->
+    </div>
+</body>
+</html>
