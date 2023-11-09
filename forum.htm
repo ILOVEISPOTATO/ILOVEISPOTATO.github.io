@@ -1,55 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mon Forum</title>
+    <title>Forum</title>
 </head>
 <body>
-    <h1>Bienvenue sur Mon Forum</h1>
-
-    <!-- Formulaire pour poster un nouveau sujet -->
+    <h1>Forum</h1>
     <form id="postForm">
-        <label for="titre">Titre du sujet:</label><br>
-        <input type="text" id="titre" name="titre"><br>
-        <label for="message">Votre message:</label><br>
-        <textarea id="message" name="message"></textarea><br>
-        <input type="submit" value="Poster le sujet">
+        <input type="text" id="topicInput" required>
+        <input type="submit" value="Post">
     </form>
-
-    <!-- Liste des sujets -->
-    <div id="sujets">
-        <!-- Les sujets seront ajoutés ici -->
-    </div>
+    <ul id="topicList">
+    </ul>
 
     <script>
-        // Liste pour stocker les sujets
-        var sujets = [];
-
         document.getElementById('postForm').addEventListener('submit', function(e) {
             e.preventDefault();
-
-            var titre = document.getElementById('titre').value;
-            var message = document.getElementById('message').value;
-
-            // Ajouter le nouveau sujet à la liste
-            sujets.push({titre: titre, message: message});
-
-            // Effacer la liste des sujets
-            document.getElementById('sujets').innerHTML = '';
-
-            // Ajouter tous les sujets de la liste à la div
-            sujets.forEach(function(sujet) {
-                var sujetDiv = document.createElement('div');
-                var titreH2 = document.createElement('h2');
-                var messageP = document.createElement('p');
-
-                titreH2.textContent = sujet.titre;
-                messageP.textContent = sujet.message;
-
-                sujetDiv.appendChild(titreH2);
-                sujetDiv.appendChild(messageP);
-
-                document.getElementById('sujets').appendChild(sujetDiv);
-            });
+            var topic = document.getElementById('topicInput').value;
+            var li = document.createElement('li');
+            li.textContent = topic;
+            document.getElementById('topicList').appendChild(li);
+            document.getElementById('topicInput').value = '';
         });
     </script>
 </body>
