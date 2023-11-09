@@ -2,25 +2,53 @@
 <html>
 <head>
     <title>Forum</title>
+    <style>
+        #posts {
+            margin-top: 20px;
+        }
+        .post {
+            border: 1px solid black;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Forum</h1>
     <form id="postForm">
-        <input type="text" id="topicInput" required>
-        <input type="submit" value="Post">
+        <label for="title">Titre:</label><br>
+        <input type="text" id="title" name="title"><br>
+        <label for="content">Contenu:</label><br>
+        <textarea id="content" name="content"></textarea><br>
+        <input type="submit" value="Poster">
     </form>
-    <ul id="topicList">
-    </ul>
+    <div id="posts"></div>
 
     <script>
+        // Charger les sujets du stockage local
+        var posts = JSON.parse(localStorage.getItem('posts')) || [];
+        posts.forEach(function(post) {
+            addPostToDOM(post.title, post.content);
+        });
+
         document.getElementById('postForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            var topic = document.getElementById('topicInput').value;
-            var li = document.createElement('li');
-            li.textContent = topic;
-            document.getElementById('topicList').appendChild(li);
-            document.getElementById('topicInput').value = '';
+            var title = document.getElementById('title').value;
+            var content = document.getElementById('content').value;
+            posts.push({title: title, content: content});
+            // Sauvegarder les sujets dans le stockage local
+            localStorage.setItem('posts', JSON.stringify(posts));
+            addPostToDOM(title, content);
+            document.getElementById('title').value = '';
+            document.getElementById('content').value = '';
         });
+
+        function addPostToDOM(title, content) {
+            var post = document.createElement('div');
+            post.className = 'post';
+            post.innerHTML = '<h2>' + title + '</h2><p>' + content + '</p>';
+            document.getElementById('posts').appendChild(post);
+        }
     </script>
 </body>
 </html>
