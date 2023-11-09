@@ -16,37 +16,6 @@
     <div id="topics"></div>
 
     <script>
-        // Configuration de Firebase
-var firebaseConfig = {
-    apiKey: "votre clé API",
-    authDomain: "votre domaine d'authentification",
-    databaseURL: "votre URL de base de données",
-    projectId: "votre ID de projet",
-    storageBucket: "votre bucket de stockage",
-    messagingSenderId: "votre ID d'expéditeur de messages",
-    appId: "votre ID d'application"
-};
-
-// Initialisation de Firebase
-firebase.initializeApp(firebaseConfig);
-
-// Référence à la base de données
-var db = firebase.database();
-
-// Envoi d'un nouveau sujet
-function postTopic(title, message) {
-    db.ref('topics').push({
-        title: title,
-        message: message
-    });
-}
-
-// Récupération des sujets
-db.ref('topics').on('value', function(snapshot) {
-    var topics = snapshot.val();
-    // Affichez les sujets ici
-});
-
         document.getElementById('postForm').addEventListener('submit', function(e) {
             e.preventDefault();
             var title = document.getElementById('title').value;
